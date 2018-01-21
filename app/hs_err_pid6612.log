@@ -1,0 +1,122 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 160088 bytes for AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (memory/allocation.inline.hpp:61), pid=6612, tid=0x000000000000068c
+#
+# JRE version:  (8.0_152-b01) (build )
+# Java VM: OpenJDK 64-Bit Server VM (25.152-b01 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000000049d3800):  JavaThread "Unknown thread" [_thread_in_vm, id=1676, stack(0x0000000004880000,0x0000000004980000)]
+
+Stack: [0x0000000004880000,0x0000000004980000]
+[error occurred during error reporting (printing stack bounds), id 0xc0000005]
+
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x00000000049d3800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=1676, stack(0x0000000004880000,0x0000000004980000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff655d30000 - 0x00007ff655d61000 	C:\Program Files\Android\Android Studio\jre\bin\java.exe
+0x00007ffc937a0000 - 0x00007ffc93980000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffc91b90000 - 0x00007ffc91c3e000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffc90950000 - 0x00007ffc90bb6000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffc933d0000 - 0x00007ffc93471000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffc93580000 - 0x00007ffc9361d000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffc91d10000 - 0x00007ffc91d6b000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffc90c70000 - 0x00007ffc90d8f000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffc93240000 - 0x00007ffc933cf000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffc90060000 - 0x00007ffc90080000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffc90d90000 - 0x00007ffc90db8000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffc8fdc0000 - 0x00007ffc8ff53000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffc90080000 - 0x00007ffc9011b000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffc8ff60000 - 0x00007ffc90056000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffc81170000 - 0x00007ffc813d9000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.16299.192_none_15c8cdae9364c23b\COMCTL32.dll
+0x00007ffc90fe0000 - 0x00007ffc912e8000 	C:\WINDOWS\System32\combase.dll
+0x00007ffc90120000 - 0x00007ffc90192000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffc934b0000 - 0x00007ffc934dd000 	C:\WINDOWS\System32\IMM32.DLL
+0x00000000556d0000 - 0x00000000557a2000 	C:\Program Files\Android\Android Studio\jre\jre\bin\msvcr100.dll
+0x0000000056050000 - 0x000000005688e000 	C:\Program Files\Android\Android Studio\jre\jre\bin\server\jvm.dll
+0x00007ffc91d70000 - 0x00007ffc91d78000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffc864a0000 - 0x00007ffc864c3000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffc8a5d0000 - 0x00007ffc8a5da000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffc86470000 - 0x00007ffc8649a000 	C:\WINDOWS\SYSTEM32\WINMMBASE.dll
+0x00007ffc8fba0000 - 0x00007ffc8fbea000 	C:\WINDOWS\System32\cfgmgr32.dll
+0x00007ffc8b7c0000 - 0x00007ffc8b7c9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffc91ca0000 - 0x00007ffc91d0c000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffc8b230000 - 0x00007ffc8b23f000 	C:\Program Files\Android\Android Studio\jre\jre\bin\verify.dll
+0x00007ffc7cd80000 - 0x00007ffc7cda9000 	C:\Program Files\Android\Android Studio\jre\jre\bin\java.dll
+0x00007ffc856d0000 - 0x00007ffc856e6000 	C:\Program Files\Android\Android Studio\jre\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Djava.awt.headless=true -Xmx64M -Dfile.encoding=windows-1251 -Duser.country=RU -Duser.language=ru -Duser.variant 
+java_command: com.google.devtools.build.android.desugar.Desugar --input C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\14.jar --output C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\desugar\debug\15.jar --input C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\5.jar --output C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\desugar\debug\6.jar --input C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\6.jar --output C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\desugar\debug\7.jar --input C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\17.jar --output C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\desugar\debug\18.jar --input C:\Users\waydeem\repos\Pogodator\app\build\intermediates\classes\debug --output C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\desugar\debug\0 --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\classes\debug --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\0.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\1.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\2.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\3.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\4.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\5.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\build\intermediates\transforms\stackFramesFixer\debug\6.jar --classpath_entry C:\Users\waydeem\repos\Pogodator\app\b
+java_class_path (initial): C:\Users\waydeem\AppData\Local\Temp\desugar_deploy.jar826752897768056292
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_121
+PATH=C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_121\bin;C:\Installations\Putty\;C:\Users\waydeem\AppData\Local\Microsoft\WindowsApps;
+USERNAME=waydeem
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10.0 , 64 bit Build 16299 (10.0.16299.15)
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 142 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx
+
+Memory: 4k page, physical 8253572k(535504k free), swap 12447876k(111924k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.152-b01) for windows-amd64 JRE (1.8.0_152-release-915-b01), built by "builder" with MS VC++ 10.0 (VS2010)
+
+time: Thu Jan 18 21:00:40 2018
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

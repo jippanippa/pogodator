@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:paddingBottom="4dp"
+                android:paddingLeft="64dp"
+                android:paddingRight="32dp"
+                android:paddingTop="4dp"
+                tools:background="#111100">
+
+    <TextView
+        android:id="@+id/itemCityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="название города"
+        android:textColor="#ffffff"
+        android:textAllCaps="true"
+        android:textSize="24sp"/>
+</RelativeLayout>
