@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,8 +26,8 @@ public class CityChoiceActivity extends ListActivity {
 
     @BindView(R.id.cityName) EditText mCityName;
 
-    private Geocoder mGeocoder;// = new Geocoder(this, new Locale("ru", "ru"));
-    private List<android.location.Address> adressesArray;// = new ArrayList<>();
+    private Geocoder mGeocoder;
+    private List<android.location.Address> adressesArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +43,9 @@ public class CityChoiceActivity extends ListActivity {
 
         Intent intent = getIntent();
 
-
         mGeocoder = new Geocoder(this, new Locale("ru", "RU"));
-
-//            try {
-//                adressesArray = mGeocoder.getFromLocation(
-//                        intent.getDoubleExtra("latitude", 55.71859575),
-//                        intent.getDoubleExtra("longitude",37.81751764), 1);
-                mCityName.setHint(intent.getStringExtra("currentCityName").toUpperCase());
-
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
+        mCityName.setHint(intent.getStringExtra("currentCityName").toUpperCase());
+    }
 
     @OnClick (R.id.buttonFindCity)
     public void findCityByName(View view) {
@@ -90,6 +81,7 @@ public class CityChoiceActivity extends ListActivity {
         intent.putExtra("longitude", longitude);
         intent.putExtra("makeNewRequest", true);
         intent.putExtra("cityName", adressesArray.get(position).getLocality());
+        Log.d(CityChoiceActivity.class.getSimpleName(), "lat and long: " + latitude + " " + longitude);
         startActivity(intent);
     }
 }

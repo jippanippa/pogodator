@@ -109,10 +109,11 @@ public class MainPogodatorActivity extends AppCompatActivity {
 
         if(intent.getBooleanExtra("makeNewRequest", false)) {
             latitude = intent.getDoubleExtra("latitude", latitude);
-            longitude = intent.getDoubleExtra("latitude", longitude);
+            longitude = intent.getDoubleExtra("longitude", longitude);
             initialStart = intent.getBooleanExtra("makeNewRequest", false);
             setCurrentCityNameLabel(intent.getStringExtra("cityName"));
             getForecast(latitude, longitude);
+            Log.d(TAG, "notfirstrequest was called " + latitude + " " + longitude);
         }
 
     }
