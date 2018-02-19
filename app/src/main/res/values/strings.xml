@@ -7,10 +7,11 @@
     <string name="no_daily_forecast_data">Нет данных</string>
     <string name="daily_button_string">ЗА НЕДЕЛЮ</string>
     <string name="hourly_button_string">ПО ЧАСАМ</string>
-    <string name="getting_data_from_the_internets_string">Получаем данные по погоде...</string>
+    <string name="getting_data_from_the_internets_string">Данных пока нет...</string>
     <string name="day_slash_rain">ОСАДКИ</string>
     <string name="humidity_string">ВЛАЖНОСТЬ</string>
     <string name="findString">НАЙТИ ГОРОД</string>
     <string name="defaultCityString">НАЗВАНИЕ ГОРОДА</string>
-    <string name="this_week_s_weather">Погода на неделю</string>
+    <string name="this_week_s_weather">ПОГОДА НА НЕДЕЛЮ</string>
+    <string name="mainActivityCityLabel">НАЗВАНИЕ ГОРОДА</string>
 </resources>

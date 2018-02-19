@@ -1,7 +1,5 @@
 package com.meojike.pogodator.weather;
 
-import com.meojike.pogodator.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -15,8 +13,6 @@ public class CurrentWeather {
     private String mSummary;
     private String mTimeZone;
 
-//    private double mLatitude;
-//    private double mLongtitude;
 
     public String getTimeZone() {
         return mTimeZone;

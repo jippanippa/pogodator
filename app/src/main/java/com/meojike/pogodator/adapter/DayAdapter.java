@@ -52,7 +52,7 @@ public class DayAdapter extends BaseAdapter {
 
         DailyWeather dailyWeather = mDays[i];
         if(i == 0) {
-            viewHolder.dayLabel.setText("Сегодня");
+            viewHolder.dayLabel.setText(dailyWeather.getDay().replaceFirst("^([\\w\\-]+)", "СЕГОДНЯ"));
         } else {
             viewHolder.dayLabel.setText(dailyWeather.getDay());
         }

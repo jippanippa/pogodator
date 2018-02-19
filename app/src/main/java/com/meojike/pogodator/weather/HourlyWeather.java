@@ -58,7 +58,6 @@ public class HourlyWeather implements Parcelable {
 
     public String getHour() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:MM");
-//        simpleDateFormat.setTimeZone(TimeZone.getTimeZone(mTimezone));
         Date dateTime = new Date(mTime * 1000);
         return simpleDateFormat.format(dateTime);
     }
@@ -83,7 +82,7 @@ public class HourlyWeather implements Parcelable {
 
     private HourlyWeather(Parcel incoming) {
         mTime = incoming.readLong();
-        mSummary = incoming.readString();
+        mSummary = incoming.readString().toUpperCase().replaceAll(" ", "\n");
         mTemperature = incoming.readDouble();
         mIcon = incoming.readString();
         mTimezone = incoming.readString();

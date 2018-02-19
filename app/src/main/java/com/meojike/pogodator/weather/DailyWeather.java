@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class DailyWeather implements Parcelable {
@@ -61,26 +62,11 @@ public class DailyWeather implements Parcelable {
 
 
     public String getDay(){
-        String dayInRussian = "";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE dd.MM.yyyy", new Locale("ru"));
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone(mTimezone));
         Date dateTime = new Date(mTime * 1000);
-        if(simpleDateFormat.format(dateTime).toLowerCase().equals("monday")) {
-            dayInRussian = "Понедельник";
-        } else if(simpleDateFormat.format(dateTime).toLowerCase().equals("tuesday")) {
-            dayInRussian = "Вторник";
-        } else if(simpleDateFormat.format(dateTime).toLowerCase().equals("wednesday")) {
-            dayInRussian = "Среда";
-        } else if(simpleDateFormat.format(dateTime).toLowerCase().equals("thursday")) {
-            dayInRussian = "Четверг";
-        } else if(simpleDateFormat.format(dateTime).toLowerCase().equals("friday")) {
-            dayInRussian = "Пятница";
-        } else if(simpleDateFormat.format(dateTime).toLowerCase().equals("saturday")) {
-            dayInRussian = "Суббота";
-        } else {
-            dayInRussian = "Воскресенье";
-        }
-        return dayInRussian;
+
+        return simpleDateFormat.format(dateTime).toUpperCase().replace(" ", "\n");
     }
 
     @Override
@@ -101,7 +87,7 @@ public class DailyWeather implements Parcelable {
 
     private DailyWeather(Parcel incoming) {
         mTime = incoming.readLong();
-        mSummary = incoming.readString();
+        mSummary = incoming.readString().toUpperCase();
         mTemperatureMax = incoming.readDouble();
         mIcon = incoming.readString();
         mTimezone = incoming.readString();

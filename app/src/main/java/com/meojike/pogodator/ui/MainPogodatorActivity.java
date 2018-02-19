@@ -12,11 +12,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -57,8 +59,6 @@ public class MainPogodatorActivity extends AppCompatActivity {
     final float MIN_DISTANCE = 1000;
     String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
-//    public static SharedPreferences sharedPreferences = getAppl
-
     private Forecast mForecast;
     private LocationManager mLocationManager;
     private Location mLocation;
@@ -81,6 +81,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
     @BindView(R.id.progressBar) ProgressBar mProgressBar;
     @BindView(R.id.changeCityButton) Button mChangeCityButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.INVISIBLE);
         mRefreshImageView.setOnClickListener(view -> getForecast(latitude, longitude));
 
-        Log.d(TAG, "Main UI code is running!");
+        Log.d(TAG, "OnCreate was called. Main UI code is running!");
     }
 
     @Override
@@ -103,6 +104,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if(initialStart) {
+            Log.d(TAG, "INITIAL START was called");
             getForecast(latitude, longitude);
             initialStart = false;
         }
@@ -120,47 +122,72 @@ public class MainPogodatorActivity extends AppCompatActivity {
 
     private void getCurrentLocationCoordinates() {
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         mLocationListener = new LocationListener() {
+
             @Override
             public void onLocationChanged(Location location) {
-                Log.d(TAG, "onLocationChanged() callback recieved");
-                System.out.println("onLocationChanged() callback recieved");
-                latitude = Double.valueOf(location.getLatitude());
-                longitude = Double.valueOf(location.getLongitude());
-                Log.d(TAG, "Latitude: " + latitude);
-                Log.d(TAG, "Longtitude: " + longitude);
-
+                Log.d(TAG, "onLocationChanged() callback received");
+//                longitude = Double.valueOf(location.getLongitude());
+//                latitude = Double.valueOf(location.getLatitude());
+//                try {
+//                    if(mCurrentCityNameLabel.getText().toString()
+//                            .equals(mGeocoder.getFromLocation(latitude, longitude, 1).get(0).getLocality())) {
+//                        getForecast(latitude, longitude);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+                Log.d(TAG, "Callback latitude and longitude: " + latitude + " " + longitude);
             }
 
             @Override
             public void onStatusChanged(String s, int i, Bundle bundle) {
-
+                Log.d(TAG, "onStatusChanged() callback received");
             }
 
             @Override
             public void onProviderEnabled(String s) {
-
+                Log.d(TAG, "onProviderEnabled() callback received");
             }
 
             @Override
             public void onProviderDisabled(String s) {
-                Log.d(TAG, "onProviderDisabled() callback recieved");
+                Log.d(TAG, "onProviderDisabled() callback received");
             }
         };
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-
             return;
         }
         mLocationManager.requestLocationUpdates(LOCATION_PROVIDER, MIN_TIME, MIN_DISTANCE, mLocationListener);
-        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
         latitude = mLocation.getLatitude();
         longitude = mLocation.getLongitude();
+        Log.d(TAG, "Non-callback latitude and longitude: " + latitude + " " + longitude);
 
         setLocationLabel(latitude, longitude, 1);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == REQUEST_CODE) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("TAG", "onRequestPermissionsResult() permission GRANTED!");
+                getCurrentLocationCoordinates();
+            } else {
+                Log.d("TAG", "Permission denied :(");
+                Intent intent = new Intent(this, CityChoiceActivity.class);
+                intent.putExtra("currentCityName", "введите имя города");
+                startActivity(intent);
+            }
+        }
     }
 
     private Forecast parseForecastDetails(String jsonData) throws JSONException {
@@ -180,7 +207,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
         for(int i = 0; i < dailyWeathers.length; i++) {
             DailyWeather dailyWeather = new DailyWeather();
             dailyWeather.setIcon(data.getJSONObject(i).getString("icon"));
-            dailyWeather.setSummary(Forecast.summaryLocalizer(data.getJSONObject(i).getString("icon")));
+            dailyWeather.setSummary(data.getJSONObject(i).getString("summary"));
             dailyWeather.setTemperatureMax(data.getJSONObject(i).getDouble("temperatureMax"));
             dailyWeather.setTime(data.getJSONObject(i).getLong("time"));
             dailyWeather.setTimezone(timezone);
@@ -198,7 +225,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
         for(int i = 0; i < data.length(); i++) {
             HourlyWeather hourlyWeather = new HourlyWeather();
             hourlyWeather.setTimezone(timezone);
-            hourlyWeather.setSummary(Forecast.summaryLocalizer(data.getJSONObject(i).getString("icon")));
+            hourlyWeather.setSummary(data.getJSONObject(i).getString("summary"));
             hourlyWeather.setTime(data.getJSONObject(i).getLong("time"));
             hourlyWeather.setTemperature(data.getJSONObject(i).getDouble("temperature"));
             hourlyWeather.setIcon(data.getJSONObject(i).getString("icon"));
@@ -224,35 +251,20 @@ public class MainPogodatorActivity extends AppCompatActivity {
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            toggleRefresh();
-                        }
-                    });
+                    runOnUiThread(() -> toggleRefresh());
+
                     alertUserAboutError();
                 }
 
                 @Override
                 public void onResponse(Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            toggleRefresh();
-                        }
-                    });
-
+                    runOnUiThread(() -> toggleRefresh());
                     try {
                         String jsonData = response.body().string();
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
                             mForecast = parseForecastDetails(jsonData);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateDisplay();
-                                }
-                            });
+                            runOnUiThread(() -> updateDisplay());
                         } else {
                             alertUserAboutError();
                         }
@@ -286,10 +298,10 @@ public class MainPogodatorActivity extends AppCompatActivity {
     private void updateDisplay() {
         CurrentWeather currentWeather = mForecast.getCurrentWeather();
         mTemperatureLabel.setText(currentWeather.getTemperature() + "");
-        mTimeLabel.setText("В " +currentWeather.getFormattedTime() + " такая погода");
+        mTimeLabel.setText("В " + currentWeather.getFormattedTime() + " ТАКАЯ ПОГОДА");
         mHumidityValue.setText(currentWeather.getHumidity() + "");
         mPrecipValue.setText(currentWeather.getPrecipChance() + "%");
-        mSummaryLabel.setText(currentWeather.getSummary());
+        mSummaryLabel.setText(currentWeather.getSummary().toUpperCase());
 
         Drawable drawable = getResources().getDrawable(mForecast.getCurrentWeather().getIconId());
         mIconImageView.setImageDrawable(drawable);
@@ -362,6 +374,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
     public void startHourlyActivity(View view) {
         Intent intent = new Intent(this, HourlyForecastActivity.class);
         intent.putExtra(HOURLY_FORECAST, mForecast.getHourlyWeatherArray());
+        intent.putExtra("currentCityName", mCurrentCityNameLabel.getText());
 
         startActivity(intent);
     }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.meojike.pogodator.R;
 import com.meojike.pogodator.adapter.HourAdapter;
@@ -19,7 +20,9 @@ import butterknife.ButterKnife;
 public class HourlyForecastActivity extends AppCompatActivity {
 
     HourlyWeather[] mHourlyWeathers;
+
     @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
+    @BindView(R.id.locationString) TextView mLocationString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +31,9 @@ public class HourlyForecastActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
+        mLocationString.setText(intent.getStringExtra("currentCityName"));
         Parcelable[] arrayOfParceables = intent.getParcelableArrayExtra(MainPogodatorActivity.HOURLY_FORECAST);
-        mHourlyWeathers = Arrays.copyOf(arrayOfParceables, arrayOfParceables.length, HourlyWeather[].class);
+        mHourlyWeathers = Arrays.copyOf(arrayOfParceables, 24, HourlyWeather[].class);
 
         HourAdapter adapter = new HourAdapter(this, mHourlyWeathers);
         mRecyclerView.setAdapter(adapter);

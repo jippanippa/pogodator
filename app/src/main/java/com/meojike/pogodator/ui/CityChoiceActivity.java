@@ -6,7 +6,6 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,7 +26,8 @@ public class CityChoiceActivity extends ListActivity {
     @BindView(R.id.cityName) EditText mCityName;
 
     private Geocoder mGeocoder;
-    private List<android.location.Address> adressesArray;
+    private List<android.location.Address> addressesArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +38,7 @@ public class CityChoiceActivity extends ListActivity {
 
     @Override
     protected void onResume() {
-
         super.onResume();
-
         Intent intent = getIntent();
 
         mGeocoder = new Geocoder(this, new Locale("ru", "RU"));
@@ -50,14 +48,21 @@ public class CityChoiceActivity extends ListActivity {
     @OnClick (R.id.buttonFindCity)
     public void findCityByName(View view) {
         try {
-            adressesArray = mGeocoder.getFromLocationName(mCityName.getText().toString(), 5);
+            addressesArray = mGeocoder.getFromLocationName(mCityName.getText().toString(), 9);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        for(int i = 0; i < addressesArray.size(); i++) {
+            if((addressesArray.get(i).getLocality() + "").equals("null")) {
+                addressesArray.remove(i);
+                i--;
+            }
 
-        String[] citiesArray = new String[adressesArray.size()];
-        for(int i = 0; i < adressesArray.size(); i++) {
-            citiesArray[i] = adressesArray.get(i).getLocality() + ", " + adressesArray.get(i).getCountryName();
+        }
+        String[] citiesArray = new String[addressesArray.size()];
+
+        for(int i = 0; i < addressesArray.size(); i++) {
+            citiesArray[i] = addressesArray.get(i).getLocality() + ",\n\t " + addressesArray.get(i).getCountryName();
         }
 
         CityAdapter citiesAdapter = new CityAdapter(this, citiesArray);
@@ -74,13 +79,13 @@ public class CityChoiceActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        double latitude = adressesArray.get(position).getLatitude();
-        double longitude = adressesArray.get(position).getLongitude();
+        double latitude = addressesArray.get(position).getLatitude();
+        double longitude = addressesArray.get(position).getLongitude();
         Intent intent = new Intent(this, MainPogodatorActivity.class);
         intent.putExtra("latitude", latitude);
         intent.putExtra("longitude", longitude);
         intent.putExtra("makeNewRequest", true);
-        intent.putExtra("cityName", adressesArray.get(position).getLocality());
+        intent.putExtra("cityName", addressesArray.get(position).getLocality());
         Log.d(CityChoiceActivity.class.getSimpleName(), "lat and long: " + latitude + " " + longitude);
         startActivity(intent);
     }

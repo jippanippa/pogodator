@@ -6,8 +6,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 tools:background="#111100">
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_toLeftOf="@id/temperatureLabel"
         android:text="TextView"
         android:textColor="#ffffff"
-        android:textSize="16sp"
+        android:textSize="15sp"
         tools:text="Pogodka daa"/>
 
     <TextView

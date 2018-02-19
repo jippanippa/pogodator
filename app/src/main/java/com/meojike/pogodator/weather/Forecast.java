@@ -32,13 +32,14 @@ public class Forecast {
     }
 
     public static int getIconId(String iconString) {
-        int iconId = R.drawable.clear_day;
 
-        if (iconString.equals("clear-day")) {
-            iconId = R.drawable.clear_day;
+        int iconId;
+
+        if (iconString.equals("clear-day") || iconString.equals("sunny")) {
+            iconId = R.drawable.sunny;
         }
         else if (iconString.equals("clear-night")) {
-            iconId = R.drawable.clear_night;
+            iconId = R.drawable.clear_day;
         }
         else if (iconString.equals("rain")) {
             iconId = R.drawable.rain;
@@ -58,49 +59,8 @@ public class Forecast {
         else {
             iconId = R.drawable.cloudy;
         }
-//        else if (iconString.equals("partly-cloudy-day")) {
-//            iconId = R.drawable.cloudy;
-//        }
-//        else if (iconString.equals("partly-cloudy-night")) {
-//            iconId = R.drawable.cloudy;
-//        }
+
         return iconId;
     }
 
-    public static String summaryLocalizer(String iconString) {
-        String summary = "";
-
-        if (iconString.equals("clear-day")) {
-            summary = "Ясно";
-        }
-        else if (iconString.equals("clear-night")) {
-            summary = "Ясно";
-        }
-        else if (iconString.equals("rain")) {
-            summary = "Дождливо";
-        }
-        else if (iconString.equals("snow")) {
-            summary = "Снежно";
-        }
-        else if (iconString.equals("sleet")) {
-            summary = "Мокроснежно";
-        }
-        else if (iconString.equals("wind")) {
-            summary = "Ветренно";
-        }
-        else if (iconString.equals("fog")) {
-            summary = "Тумано";
-        }
-        else {
-            summary = "Облачно";
-        }
-//        else if (iconString.equals("partly-cloudy-day")) {
-//            summary = "Облачно";
-//        }
-//        else if (iconString.equals("partly-cloudy-night")) {
-//            summary = "Облачно";
-//        }
-        return summary;
-
-    }
 }

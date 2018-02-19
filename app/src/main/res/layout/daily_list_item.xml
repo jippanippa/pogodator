@@ -5,8 +5,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:paddingLeft="64dp"
-                android:paddingRight="32dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 android:paddingTop="4dp"
                 tools:background="#111100">
 
@@ -44,6 +44,6 @@
         android:layout_toRightOf="@+id/iconImageView"
         android:text="TextView"
         android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textSize="18sp"
         tools:text="wednesday"/>
 </RelativeLayout>

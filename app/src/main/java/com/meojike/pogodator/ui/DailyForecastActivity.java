@@ -43,15 +43,11 @@ public class DailyForecastActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
         String message = "";
         if(position != 0) {
-//            if(dayOfTheWeek.toLowerCase().equals("среда") || dayOfTheWeek.toLowerCase().equals("пятница")
-//                    || dayOfTheWeek.toLowerCase().equals("суббота")) {
-//                pre = pre.replace();
-//            } else {
-            String dayOfTheWeek = mDailyWeathers[position].getDay();
-            String pre = dayOfTheWeek.equals("Вторник") ? "Во вторник" : "В " + dayOfTheWeek.toLowerCase();
+            String dayOfTheWeek = mDailyWeathers[position].getDay().replace("\n", " ");
             message = String.format("%s максимальная температура будет равна %s°C и в целом будет %s ",
-                    !pre.substring(pre.length() - 2, pre.length() - 1).equals("а") ? pre : pre.replace( (pre.substring(pre.length() - 2, pre.length() - 1)), "у"),
-                    mDailyWeathers[position].getTemperatureMax(), mDailyWeathers[position].getSummary().toLowerCase());
+                    dayOfTheWeek + ": ",
+                    mDailyWeathers[position].getTemperatureMax(),
+                    mDailyWeathers[position].getSummary().toLowerCase());
         } else {
             message = String.format("Максимальная температура сегодня равна %s°C и в целом %s",
                     mDailyWeathers[0].getTemperatureMax(), mDailyWeathers[0].getSummary().toLowerCase());
