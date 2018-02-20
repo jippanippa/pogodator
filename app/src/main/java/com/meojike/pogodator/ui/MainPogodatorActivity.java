@@ -67,7 +67,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
 
     private double latitude;
     private double longitude;
-    private boolean initialStart;
+    private boolean mustNotGetLocalCoordinates;
     private Geocoder mGeocoder;
 
     @BindView(R.id.locationLabel) TextView mCurrentCityNameLabel;
@@ -88,12 +88,9 @@ public class MainPogodatorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_pogodator);
         ButterKnife.bind(this);
         mGeocoder = new Geocoder(this, new Locale("ru", "RU"));
-        getCurrentLocationCoordinates();
-        initialStart = true;
 
         mProgressBar.setVisibility(View.INVISIBLE);
         mRefreshImageView.setOnClickListener(view -> getForecast(latitude, longitude));
-
         Log.d(TAG, "OnCreate was called. Main UI code is running!");
     }
 
@@ -101,21 +98,17 @@ public class MainPogodatorActivity extends AppCompatActivity {
     protected void onResume() {
         Log.d(TAG, "OnResume was called");
         super.onResume();
+
         Intent intent = getIntent();
-
-        if(initialStart) {
-            Log.d(TAG, "INITIAL START was called");
-            getForecast(latitude, longitude);
-            initialStart = false;
-        }
-
         if(intent.getBooleanExtra("makeNewRequest", false)) {
             latitude = intent.getDoubleExtra("latitude", latitude);
             longitude = intent.getDoubleExtra("longitude", longitude);
-            initialStart = intent.getBooleanExtra("makeNewRequest", false);
             setCurrentCityNameLabel(intent.getStringExtra("cityName"));
             getForecast(latitude, longitude);
             Log.d(TAG, "notfirstrequest was called " + latitude + " " + longitude);
+        } else {
+            Log.d(TAG, "INITIAL START was called ");
+            if(!mustNotGetLocalCoordinates) getCurrentLocationCoordinates();
         }
 
     }
@@ -128,17 +121,6 @@ public class MainPogodatorActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 Log.d(TAG, "onLocationChanged() callback received");
-//                longitude = Double.valueOf(location.getLongitude());
-//                latitude = Double.valueOf(location.getLatitude());
-//                try {
-//                    if(mCurrentCityNameLabel.getText().toString()
-//                            .equals(mGeocoder.getFromLocation(latitude, longitude, 1).get(0).getLocality())) {
-//                        getForecast(latitude, longitude);
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                Log.d(TAG, "Callback latitude and longitude: " + latitude + " " + longitude);
             }
 
             @Override
@@ -169,7 +151,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
         latitude = mLocation.getLatitude();
         longitude = mLocation.getLongitude();
         Log.d(TAG, "Non-callback latitude and longitude: " + latitude + " " + longitude);
-
+        getForecast(latitude, longitude);
         setLocationLabel(latitude, longitude, 1);
     }
 
@@ -183,6 +165,7 @@ public class MainPogodatorActivity extends AppCompatActivity {
                 getCurrentLocationCoordinates();
             } else {
                 Log.d("TAG", "Permission denied :(");
+                mustNotGetLocalCoordinates = true;
                 Intent intent = new Intent(this, CityChoiceActivity.class);
                 intent.putExtra("currentCityName", "введите имя города");
                 startActivity(intent);
