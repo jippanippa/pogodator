@@ -14,4 +14,5 @@
     <string name="defaultCityString">НАЗВАНИЕ ГОРОДА</string>
     <string name="this_week_s_weather">ПОГОДА НА НЕДЕЛЮ</string>
     <string name="mainActivityCityLabel">НАЗВАНИЕ ГОРОДА</string>
+    <string name="wait_text">ПОЛУЧАЕМ ДАННЫЕ...</string>
 </resources>

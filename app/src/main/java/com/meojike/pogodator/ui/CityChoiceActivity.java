@@ -40,7 +40,6 @@ public class CityChoiceActivity extends ListActivity {
     protected void onResume() {
         super.onResume();
         Intent intent = getIntent();
-
         mGeocoder = new Geocoder(this, new Locale("ru", "RU"));
         mCityName.setHint(intent.getStringExtra("currentCityName").toUpperCase());
     }
@@ -48,7 +47,12 @@ public class CityChoiceActivity extends ListActivity {
     @OnClick (R.id.buttonFindCity)
     public void findCityByName(View view) {
         try {
-            addressesArray = mGeocoder.getFromLocationName(mCityName.getText().toString(), 9);
+            if(mCityName.getText().toString().equals("")) {
+                Toast.makeText(this, "Так мы ничего не найдём :(", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                addressesArray = mGeocoder.getFromLocationName(mCityName.getText().toString(), 9);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,7 +61,6 @@ public class CityChoiceActivity extends ListActivity {
                 addressesArray.remove(i);
                 i--;
             }
-
         }
         String[] citiesArray = new String[addressesArray.size()];
 
